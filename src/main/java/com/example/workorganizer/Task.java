@@ -21,6 +21,15 @@ public class Task {
         this.description = new SimpleStringProperty(description);
     }
 
+    public Task() {
+        this.day = new SimpleStringProperty("Enter day");
+        this.task = new SimpleStringProperty("Enter task");
+        this.allTime = new SimpleStringProperty("Enter all time");
+        this.completed = new SimpleStringProperty("Completed percent");
+        this.timeLeft = new SimpleStringProperty("Time left");
+        this.description = new SimpleStringProperty("Specific description");
+    }
+
     public String getDay() {
         return day.get();
     }

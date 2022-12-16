@@ -14,12 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 public class TableChronology {
     private final TableView<Task> tableChronology = new TableView<>();
     private final boolean isMainSceneTableChronology;
-    private final ObservableList<Task> data =
-            FXCollections.observableArrayList(
-                    new Task("Занятие с учеником", "Воскресенье",
-                            "11:00am", "Еженедельно", "Егор", "Термодинамика"),
-                    new Task("Занятие с учеником", "Воскресенье",
-                            "20:00am", "Еженедельно", "Настя", "Механика"));
+    private ObservableList<Task> data = FXCollections.observableArrayList();
 
     public TableChronology(boolean isMainSceneTableChronology){
         this.isMainSceneTableChronology = isMainSceneTableChronology;
@@ -101,6 +96,9 @@ public class TableChronology {
         return new ArrayList<>(Arrays.asList(taskCol, allTimeCol,
                 completedCol, descriptionCol));
     }
+
+    public void refreshData() {
+        data = FXCollections.observableArrayList();
+        tableChronology.setItems(data);
+    }
 }
-
-
