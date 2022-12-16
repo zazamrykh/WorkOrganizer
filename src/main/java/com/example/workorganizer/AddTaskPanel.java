@@ -12,41 +12,41 @@ public class AddTaskPanel {
         userEntryHBox.setSpacing(8);
         userEntryHBox.setPadding(new Insets(10, 10, 10, 10));
 
-        TextField addTask = new TextField();
         TextField addDay = new TextField();
-        TextField addTime = new TextField();
-        TextField addDeadline = new TextField();
-        TextField addMentor = new TextField();
+        TextField addTask = new TextField();
+        TextField addAllTime = new TextField();
+        TextField addCompleted = new TextField();
+        TextField addTimeLeft = new TextField();
         TextField addDescription = new TextField();
 
-        addTask.setText("Enter task");
         addDay.setText("Enter day");
-        addTime.setText("Time");
-        addDeadline.setText("Deadline");
-        addMentor.setText("Enter mentor");
+        addTask.setText("Enter task");
+        addAllTime.setText("Enter all time");
+        addCompleted.setText("Completed");
+        addTimeLeft.setText("Time left");
         addDescription.setText("Add specific descriptions");
 
         addTask.setPrefWidth(120);
         addDay.setPrefWidth(75);
-        addTime.setPrefWidth(65);
-        addDeadline.setPrefWidth(65);
-        addMentor.setPrefWidth(120);
+        addAllTime.setPrefWidth(65);
+        addCompleted.setPrefWidth(65);
+        addTimeLeft.setPrefWidth(120);
         addDescription.setPrefWidth(120);
 
         Button addButton = new Button("Add");
         addButton.setOnAction(e -> {
             tableChronology.getData().add(new Task(
-                    addTask.getText(),
                     addDay.getText(),
-                    addTime.getText(),
-                    addDeadline.getText(),
-                    addMentor.getText(),
+                    addTask.getText(),
+                    addAllTime.getText(),
+                    addCompleted.getText(),
+                    addTimeLeft.getText(),
                     addDescription.getText()));
-            addTask.setText("Enter task");
             addDay.setText("Enter day");
-            addTime.setText("Time");
-            addDeadline.setText("Deadline");
-            addMentor.setText("Enter mentor");
+            addTask.setText("Enter task");
+            addAllTime.setText("Enter all time");
+            addCompleted.setText("Completed");
+            addTimeLeft.setText("Time left");
             addDescription.setText("Add specific descriptions");
         });
 
@@ -56,8 +56,8 @@ public class AddTaskPanel {
             tableChronology.getData().remove(selectedItem);
         });
 
-        userEntryHBox.getChildren().addAll(addTask, addDay, addTime, addDeadline,
-                addMentor, addDescription, addButton, removeButton);
+        userEntryHBox.getChildren().addAll(addDay, addTask, addAllTime, addCompleted,
+                addTimeLeft, addDescription, addButton, removeButton);
     }
 
     public HBox getUserEntryHBox() {

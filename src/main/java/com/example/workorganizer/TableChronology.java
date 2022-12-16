@@ -13,6 +13,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 public class TableChronology {
     private final TableView<Task> tableChronology = new TableView<>();
+    private final boolean isMainSceneTableChronology;
     private final ObservableList<Task> data =
             FXCollections.observableArrayList(
                     new Task("Занятие с учеником", "Воскресенье",
@@ -20,7 +21,8 @@ public class TableChronology {
                     new Task("Занятие с учеником", "Воскресенье",
                             "20:00am", "Еженедельно", "Настя", "Механика"));
 
-    public TableChronology(){
+    public TableChronology(boolean isMainSceneTableChronology){
+        this.isMainSceneTableChronology = isMainSceneTableChronology;
         List<TableColumn<Task, String>> columns = createAndGetColumns();
         tableChronology.setEditable(true);
         tableChronology.setItems(data);
@@ -43,20 +45,20 @@ public class TableChronology {
                 new PropertyValueFactory<>(column.getText()));
         column.setCellFactory(TextFieldTableCell.forTableColumn());
         switch (columnName) {
-            case "Task" -> column.setOnEditCommit(
-                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setTask(t.getNewValue())
-            );
             case "Day" -> column.setOnEditCommit(
                     t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setDay(t.getNewValue())
             );
-            case "Time" -> column.setOnEditCommit(
-                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setTime(t.getNewValue())
+            case "Task" -> column.setOnEditCommit(
+                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setTask(t.getNewValue())
             );
-            case "Deadline" -> column.setOnEditCommit(
-                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setDeadline(t.getNewValue())
+            case "AllTime" -> column.setOnEditCommit(
+                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setAllTime(t.getNewValue())
             );
-            case "Mentor" -> column.setOnEditCommit(
-                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setMentor(t.getNewValue())
+            case "Completed" -> column.setOnEditCommit(
+                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setCompleted(t.getNewValue())
+            );
+            case "TimeLeft" -> column.setOnEditCommit(
+                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setTimeLeft(t.getNewValue())
             );
             case "Description" -> column.setOnEditCommit(
                     t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setDescription(t.getNewValue())
@@ -65,29 +67,39 @@ public class TableChronology {
     }
 
     private List<TableColumn<Task, String>> createAndGetColumns() {
-        TableColumn<Task, String> taskCol = new TableColumn<>("Task");
         TableColumn<Task, String> dayCol = new TableColumn<>("Day");
-        TableColumn<Task, String> timeCol = new TableColumn<>("Time");
-        TableColumn<Task, String> deadlineCol = new TableColumn<>("Deadline");
-        TableColumn<Task, String> mentorCol = new TableColumn<>("Mentor");
+        TableColumn<Task, String> taskCol = new TableColumn<>("Task");
+        TableColumn<Task, String> allTimeCol = new TableColumn<>("AllTime");
+        TableColumn<Task, String> completedCol = new TableColumn<>("Completed");
+        TableColumn<Task, String> timeLeftCol = new TableColumn<>("TimeLeft");
         TableColumn<Task, String> descriptionCol = new TableColumn<>("Description");
 
-        taskCol.setMinWidth(150);
         dayCol.setMinWidth(70);
-        timeCol.setMinWidth(60);
-        deadlineCol.setMinWidth(60);
-        mentorCol.setMinWidth(120);
+        taskCol.setMinWidth(150);
+        allTimeCol.setMinWidth(60);
+        completedCol.setMinWidth(60);
+        timeLeftCol.setMinWidth(120);
         descriptionCol.setMinWidth(200);
 
-        setColumnProperties(taskCol, "Task");
         setColumnProperties(dayCol, "Day");
-        setColumnProperties(timeCol, "Time");
-        setColumnProperties(deadlineCol, "Deadline");
-        setColumnProperties(mentorCol, "Mentor");
+        setColumnProperties(taskCol, "Task");
+        setColumnProperties(allTimeCol, "AllTime");
+        setColumnProperties(completedCol, "Completed");
+        setColumnProperties(timeLeftCol, "TimeLeft");
         setColumnProperties(descriptionCol, "Description");
 
-        return new ArrayList<>(Arrays.asList(taskCol, dayCol, timeCol,
-                deadlineCol, mentorCol, descriptionCol));
+        if (isMainSceneTableChronology){
+            dayCol.setEditable(false);
+            taskCol.setEditable(false);
+            allTimeCol.setEditable(false);
+            timeLeftCol.setEditable(false);
+
+            return new ArrayList<>(Arrays.asList(dayCol, taskCol, allTimeCol,
+                    completedCol, timeLeftCol, descriptionCol));
+        }
+
+        return new ArrayList<>(Arrays.asList(taskCol, allTimeCol,
+                completedCol, descriptionCol));
     }
 }
 

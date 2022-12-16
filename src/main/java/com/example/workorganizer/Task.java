@@ -4,29 +4,21 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Task {
 
-    private final SimpleStringProperty task;
     private final SimpleStringProperty day;
-    private final SimpleStringProperty time;
-    private final SimpleStringProperty deadline;
-    private final SimpleStringProperty mentor;
+    private final SimpleStringProperty task;
+    private final SimpleStringProperty allTime;
+    private final SimpleStringProperty completed;
+    private final SimpleStringProperty timeLeft;
     private final SimpleStringProperty description;
 
-    Task(String task, String day, String time, String deadline, String mentor, String description) {
+    Task(String day, String task, String allTime, String completed, String timeLeft, String description) {
 
-        this.task = new SimpleStringProperty(task);
         this.day = new SimpleStringProperty(day);
-        this.time = new SimpleStringProperty(time);
-        this.deadline = new SimpleStringProperty(deadline);
-        this.mentor = new SimpleStringProperty(mentor);
+        this.task = new SimpleStringProperty(task);
+        this.allTime = new SimpleStringProperty(allTime);
+        this.completed = new SimpleStringProperty(completed);
+        this.timeLeft = new SimpleStringProperty(timeLeft);
         this.description = new SimpleStringProperty(description);
-    }
-
-    public String getTask() {
-        return task.get();
-    }
-
-    public void setTask(String task) {
-        this.task.set(task);
     }
 
     public String getDay() {
@@ -37,28 +29,36 @@ public class Task {
         this.day.set(day);
     }
 
-    public String getTime() {
-        return time.get();
+    public String getTask() {
+        return task.get();
     }
 
-    public void setTime(String time) {
-        this.time.set(time);
+    public void setTask(String task) {
+        this.task.set(task);
     }
 
-    public String getDeadline() {
-        return deadline.get();
+    public String getAllTime() {
+        return allTime.get();
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline.set(deadline);
+    public void setAllTime(String allTime) {
+        this.allTime.set(allTime);
     }
 
-    public String getMentor() {
-        return mentor.get();
+    public String getCompleted() {
+        return completed.get();
     }
 
-    public void setMentor(String mentor) {
-        this.mentor.set(mentor);
+    public void setCompleted(String completed) {
+        this.completed.set(completed);
+    }
+
+    public String getTimeLeft() {
+        return timeLeft.get();
+    }
+
+    public void setTimeLeft(String timeLeft) {
+        this.timeLeft.set(timeLeft);
     }
 
     public String getDescription() {

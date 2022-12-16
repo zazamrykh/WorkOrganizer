@@ -23,7 +23,7 @@ public class TopPanel {
     private final MenuBar menuBar = new MenuBar();
     private final FileChooser fileChooser = new FileChooser();
     private final Desktop desktop = Desktop.getDesktop();
-    public TopPanel(String menuLabel, Stage stage, Scene mainScene, Scene addTasksScene, MenuItem[] menuItems) {
+    public TopPanel(String menuLabel, Stage stage, Scene addTasksScene, MenuItem[] menuItems) {
         Label response = new Label("Menu");
         Menu fileMenu = new Menu("_" + menuLabel);
         for (MenuItem menuItem : menuItems) {
@@ -37,6 +37,7 @@ public class TopPanel {
         menuBar.getMenus().add(Task);
         addTask.setOnAction(ae -> {
             stage.setScene(addTasksScene);
+            stage.setWidth(stage.getWidth() + 1);
         });
 
         EventHandler<ActionEvent> MenuHandler =
@@ -88,7 +89,7 @@ public class TopPanel {
             desktop.open(opensFile);
         } catch (IOException ex) {
             Logger.getLogger(
-                    ToDoApp.class.getName()).log(
+                    WorkOrganizerApp.class.getName()).log(
                     Level.SEVERE, null, ex
             );
         }
@@ -99,7 +100,7 @@ public class TopPanel {
             desktop.open(savesFile);
         } catch (IOException ex) {
             Logger.getLogger(
-                    ToDoApp.class.getName()).log(
+                    WorkOrganizerApp.class.getName()).log(
                     Level.SEVERE, null, ex
             );
         }
