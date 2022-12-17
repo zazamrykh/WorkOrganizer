@@ -2,6 +2,7 @@ package com.example.workorganizer;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
@@ -12,14 +13,16 @@ public class AddTaskPanel {
         userEntryHBox.setSpacing(8);
         userEntryHBox.setPadding(new Insets(10, 10, 10, 10));
 
-        TextField addDay = new TextField();
+        SetDayForTaskList addDay = new SetDayForTaskList();
+        ComboBox<WeekDays> addDayComboBox = addDay.getComboBox();
+
         TextField addTask = new TextField();
         TextField addAllTime = new TextField();
         TextField addCompleted = new TextField();
         TextField addTimeLeft = new TextField();
         TextField addDescription = new TextField();
 
-        addDay.setText("Enter day");
+        addDayComboBox.setValue(WeekDays.MONDAY);
         addTask.setText("Enter task");
         addAllTime.setText("Enter all time");
         addCompleted.setText("Completed");
@@ -27,7 +30,7 @@ public class AddTaskPanel {
         addDescription.setText("Add specific descriptions");
 
         addTask.setPrefWidth(120);
-        addDay.setPrefWidth(75);
+        addDayComboBox.setPrefWidth(75);
         addAllTime.setPrefWidth(65);
         addCompleted.setPrefWidth(65);
         addTimeLeft.setPrefWidth(120);
@@ -36,13 +39,13 @@ public class AddTaskPanel {
         Button addButton = new Button("Add");
         addButton.setOnAction(e -> {
             tableChronology.getData().add(new Task(
-                    addDay.getText(),
+                    addDayComboBox.getValue().toString(),
                     addTask.getText(),
                     addAllTime.getText(),
                     addCompleted.getText(),
                     addTimeLeft.getText(),
                     addDescription.getText()));
-            addDay.setText("Enter day");
+            addDayComboBox.setValue(WeekDays.MONDAY);
             addTask.setText("Enter task");
             addAllTime.setText("Enter all time");
             addCompleted.setText("Completed");
@@ -56,7 +59,7 @@ public class AddTaskPanel {
             tableChronology.getData().remove(selectedItem);
         });
 
-        userEntryHBox.getChildren().addAll(addDay, addTask, addAllTime, addCompleted,
+        userEntryHBox.getChildren().addAll(addDayComboBox, addTask, addAllTime, addCompleted,
                 addTimeLeft, addDescription, addButton, removeButton);
     }
 
