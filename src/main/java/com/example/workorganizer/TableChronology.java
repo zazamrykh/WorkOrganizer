@@ -101,4 +101,8 @@ public class TableChronology {
         data = FXCollections.observableArrayList();
         tableChronology.setItems(data);
     }
+
+    public void setData(ObservableList<Task> data) {
+        this.data = data;
+    }
 }

@@ -14,7 +14,8 @@ public class OrganizeTaskPanel {
         organizeTaskButton.setOnAction(actionEvent -> {
             stage.setScene(scene);
             stage.setWidth(stage.getWidth() - 1);
-            tableChronologyMainScene.getData().setAll(tableChronologyAddTasksScene.getData());
+            TransferTasks.transfer(tableChronologyAddTasksScene, tableChronologyMainScene);
+//            tableChronologyMainScene.getData().setAll(tableChronologyAddTasksScene.getData());
             tableChronologyAddTasksScene.refreshData();
         });
 

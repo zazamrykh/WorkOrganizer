@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Task {
 
+    private WeekDays weekDay;
     private final SimpleStringProperty day;
     private final SimpleStringProperty task;
     private final SimpleStringProperty allTime;
