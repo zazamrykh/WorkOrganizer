@@ -55,7 +55,7 @@ public class AddTaskPanel {
 
         Button removeButton = new Button("Remove");
         removeButton.setOnAction(e -> {
-            Task selectedItem = tableChronology.getTableChronology().getSelectionModel().getSelectedItem();
+            Task selectedItem = tableChronology.getTableView().getSelectionModel().getSelectedItem();
             tableChronology.getData().remove(selectedItem);
         });
 
