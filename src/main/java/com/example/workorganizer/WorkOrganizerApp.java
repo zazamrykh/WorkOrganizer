@@ -57,7 +57,7 @@ public class WorkOrganizerApp extends Application {
                 tableChronologyAddTasksScene.getTableChronology(), organizeTaskPanel.getOrganizeTaskHBox());
 
         primaryStage.setWidth(1000);
-        primaryStage.setHeight(650);
+        primaryStage.setHeight(600);
         primaryStage.setTitle("Work Organizer");
         primaryStage.setScene(mainScene);
         primaryStage.show();

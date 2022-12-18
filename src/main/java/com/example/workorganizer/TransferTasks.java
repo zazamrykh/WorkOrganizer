@@ -1,5 +1,6 @@
 package com.example.workorganizer;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,16 @@ public class TransferTasks {
             workload.put(weekDay, 0);
         }
 
+        Comparator<Task> comparatorOfTime = (task1, task2) -> {
+            int workload1 = Integer.parseInt(task1.getAllTime());
+            int workload2 = Integer.parseInt(task2.getAllTime());
+            return workload2 - workload1;
+        };
+
+        fromList.sort(comparatorOfTime);
+
         for (Task task :fromList) {
+            System.out.println(task.getAllTime());
             insertLessWorkload(task, toList, workload);
         }
 

@@ -29,12 +29,12 @@ public class AddTaskPanel {
         addTimeLeft.setText("Time left");
         addDescription.setText("Add specific descriptions");
 
-        addTask.setPrefWidth(120);
-        addDayComboBox.setPrefWidth(75);
-        addAllTime.setPrefWidth(65);
-        addCompleted.setPrefWidth(65);
+        addTask.setPrefWidth(150);
+        addDayComboBox.setPrefWidth(100);
+        addAllTime.setPrefWidth(100);
+        addCompleted.setPrefWidth(100);
         addTimeLeft.setPrefWidth(120);
-        addDescription.setPrefWidth(120);
+        addDescription.setPrefWidth(150);
 
         Button addButton = new Button("Add");
         addButton.setOnAction(e -> {
