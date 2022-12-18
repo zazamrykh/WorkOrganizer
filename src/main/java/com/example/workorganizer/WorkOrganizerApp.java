@@ -53,7 +53,7 @@ public class WorkOrganizerApp extends Application {
         allItemsMainScene.getChildren().addAll(topPanelMainScene.getMenuBar(), labelMainScene.getMainLabel(),
                 tableChronologyMainScene.getTableChronology(), addTaskPanel.getUserEntryHBox());
 
-        allItemsAddTasksScene.getChildren().addAll(topPanelAddTaskScene.getMenuBar(),labelAddTaskScene.getMainLabel(),
+        allItemsAddTasksScene.getChildren().addAll(topPanelAddTaskScene.getMenuBar(), labelAddTaskScene.getMainLabel(),
                 tableChronologyAddTasksScene.getTableChronology(), organizeTaskPanel.getOrganizeTaskHBox());
 
         primaryStage.setWidth(1000);

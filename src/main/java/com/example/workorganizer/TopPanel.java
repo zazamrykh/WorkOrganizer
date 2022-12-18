@@ -23,6 +23,8 @@ public class TopPanel {
     private final MenuBar menuBar = new MenuBar();
     private final FileChooser fileChooser = new FileChooser();
     private final Desktop desktop = Desktop.getDesktop();
+    private int resolutionChanger = 1;
+
     public TopPanel(String menuLabel, Stage stage, Scene addTasksScene,LabelView labelView, MenuItem[] menuItems) {
         Label response = new Label("Menu");
         Menu fileMenu = new Menu("_" + menuLabel);
@@ -38,7 +40,15 @@ public class TopPanel {
         addTask.setOnAction(ae -> {
             labelView.refreshQuoteLabel();
             stage.setScene(addTasksScene);
+            resolutionChanger *= (-1);
+            stage.setWidth(stage.getWidth() + resolutionChanger);
         });
+
+        Menu Quote = new Menu("_" + "Quote");
+        MenuItem refresh = new MenuItem("New");
+        Quote.getItems().add(refresh);
+        refresh.setOnAction(ae -> labelView.refreshQuoteLabel());
+        menuBar.getMenus().add(Quote);
 
         EventHandler<ActionEvent> MenuHandler =
                 ae -> {

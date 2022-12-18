@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class OrganizeTaskPanel {
+    private int resolutionChanger = 1;
     private final HBox organizeTaskHBox;
     public OrganizeTaskPanel (Stage stage, Scene scene, TableChronology tableChronologyAddTasksScene,
                               TableChronology tableChronologyMainScene, LabelView labelView) {
@@ -14,6 +15,8 @@ public class OrganizeTaskPanel {
         organizeTaskButton.setOnAction(actionEvent -> {
             labelView.refreshQuoteLabel();
             stage.setScene(scene);
+            resolutionChanger *= (-1);
+            stage.setWidth(stage.getWidth() + resolutionChanger);
             TransferTasks.transfer(tableChronologyAddTasksScene, tableChronologyMainScene);
 //            tableChronologyMainScene.getData().setAll(tableChronologyAddTasksScene.getData());
             tableChronologyAddTasksScene.refreshData();
