@@ -24,22 +24,22 @@ public class WorkOrganizerApp extends Application {
         allItemsMainScene.setSpacing(7);
         allItemsAddTasksScene.setSpacing(7);
 
-        TopPanel topPanelMainScene = new TopPanel("File", primaryStage, addTasksScene,
-                new MenuItem[] {new MenuItem("Open..."),
-                new MenuItem("Save As..."),
-                new MenuItem("Print..."),
-                new MenuItem("Exit")});
+        final LabelView labelMainScene = new LabelView("Work Organizer", new Font("Arial", 18),
+                new Insets(10, 10, 10, 10), true);
+        final LabelView labelAddTaskScene = new LabelView("Work Organizer", new Font("Arial", 18),
+                new Insets(10, 10, 10, 10), true);
 
-        TopPanel topPanelAddTaskScene = new TopPanel("File", primaryStage, addTasksScene,
+        TopPanel topPanelMainScene = new TopPanel("File", primaryStage, addTasksScene, labelMainScene,
                 new MenuItem[] {new MenuItem("Open..."),
                         new MenuItem("Save As..."),
                         new MenuItem("Print..."),
                         new MenuItem("Exit")});
 
-        final LabelView labelMainScene = new LabelView("Work Organizer", new Font("Arial", 18),
-                new Insets(10, 10, 10, 10));
-        final LabelView labelAddTaskScene = new LabelView("Work Organizer", new Font("Arial", 18),
-                new Insets(10, 10, 10, 10));
+        TopPanel topPanelAddTaskScene = new TopPanel("File", primaryStage, addTasksScene, labelAddTaskScene,
+                new MenuItem[] {new MenuItem("Open..."),
+                        new MenuItem("Save As..."),
+                        new MenuItem("Print..."),
+                        new MenuItem("Exit")});
 
         TableChronology tableChronologyMainScene = new TableChronology(true);
         TableChronology tableChronologyAddTasksScene = new TableChronology(false);
@@ -47,17 +47,17 @@ public class WorkOrganizerApp extends Application {
         AddTaskPanel addTaskPanel = new AddTaskPanel(tableChronologyMainScene);
 
         OrganizeTaskPanel organizeTaskPanel = new OrganizeTaskPanel(primaryStage, mainScene,
-                tableChronologyAddTasksScene, tableChronologyMainScene);
+                tableChronologyAddTasksScene, tableChronologyMainScene, labelMainScene);
 
 
-        allItemsMainScene.getChildren().addAll(topPanelMainScene.getMenuBar(), labelMainScene.getLabel(),
+        allItemsMainScene.getChildren().addAll(topPanelMainScene.getMenuBar(), labelMainScene.getMainLabel(),
                 tableChronologyMainScene.getTableChronology(), addTaskPanel.getUserEntryHBox());
 
-        allItemsAddTasksScene.getChildren().addAll(topPanelAddTaskScene.getMenuBar(),labelAddTaskScene.getLabel(),
+        allItemsAddTasksScene.getChildren().addAll(topPanelAddTaskScene.getMenuBar(),labelAddTaskScene.getMainLabel(),
                 tableChronologyAddTasksScene.getTableChronology(), organizeTaskPanel.getOrganizeTaskHBox());
 
-        primaryStage.setWidth(750);
-        primaryStage.setHeight(500);
+        primaryStage.setWidth(1000);
+        primaryStage.setHeight(650);
         primaryStage.setTitle("Work Organizer");
         primaryStage.setScene(mainScene);
         primaryStage.show();

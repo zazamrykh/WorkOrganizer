@@ -9,11 +9,11 @@ import javafx.stage.Stage;
 public class OrganizeTaskPanel {
     private final HBox organizeTaskHBox;
     public OrganizeTaskPanel (Stage stage, Scene scene, TableChronology tableChronologyAddTasksScene,
-                              TableChronology tableChronologyMainScene) {
+                              TableChronology tableChronologyMainScene, LabelView labelView) {
         Button organizeTaskButton = new Button("Organize Tasks");
         organizeTaskButton.setOnAction(actionEvent -> {
+            labelView.refreshQuoteLabel();
             stage.setScene(scene);
-            stage.setWidth(stage.getWidth() - 1);
             TransferTasks.transfer(tableChronologyAddTasksScene, tableChronologyMainScene);
 //            tableChronologyMainScene.getData().setAll(tableChronologyAddTasksScene.getData());
             tableChronologyAddTasksScene.refreshData();
