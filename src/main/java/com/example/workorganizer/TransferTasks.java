@@ -25,7 +25,6 @@ public class TransferTasks {
         fromList.sort(comparatorOfTime);
 
         for (Task task :fromList) {
-            System.out.println(task.getAllTime());
             insertLessWorkload(task, toList, workload);
         }
 

@@ -12,8 +12,7 @@ public class Task {
     private final SimpleStringProperty timeLeft;
     private final SimpleStringProperty description;
 
-    Task(String day, String task, String allTime, String completed, String timeLeft, String description) {
-
+    public Task(String day, String task, String allTime, String completed, String timeLeft, String description) {
         this.day = new SimpleStringProperty(day);
         this.task = new SimpleStringProperty(task);
         this.allTime = new SimpleStringProperty(allTime);
@@ -22,11 +21,21 @@ public class Task {
         this.description = new SimpleStringProperty(description);
     }
 
+    Task(String day, String task, String allTime, String completed, String description) {
+        this.day = new SimpleStringProperty(day);
+        this.task = new SimpleStringProperty(task);
+        this.allTime = new SimpleStringProperty(allTime);
+        this.completed = new SimpleStringProperty(completed);
+        this.timeLeft = new SimpleStringProperty("-1");
+        this.description = new SimpleStringProperty(description);
+    }
+
+
     public Task() {
         this.day = new SimpleStringProperty("Enter day");
         this.task = new SimpleStringProperty("Enter task");
-        this.allTime = new SimpleStringProperty("Enter all time");
-        this.completed = new SimpleStringProperty("Completed percent");
+        this.allTime = new SimpleStringProperty("0");
+        this.completed = new SimpleStringProperty("0");
         this.timeLeft = new SimpleStringProperty("Time left");
         this.description = new SimpleStringProperty("Specific description");
     }

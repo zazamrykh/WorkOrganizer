@@ -19,38 +19,60 @@ public class AddTaskPanel {
         TextField addTask = new TextField();
         TextField addAllTime = new TextField();
         TextField addCompleted = new TextField();
-        TextField addTimeLeft = new TextField();
         TextField addDescription = new TextField();
 
         addDayComboBox.setValue(WeekDays.MONDAY);
         addTask.setText("Enter task");
         addAllTime.setText("Enter all time");
         addCompleted.setText("Completed");
-        addTimeLeft.setText("Time left");
         addDescription.setText("Add specific descriptions");
 
-        addTask.setPrefWidth(150);
+        addTask.setPrefWidth(170);
         addDayComboBox.setPrefWidth(100);
         addAllTime.setPrefWidth(100);
         addCompleted.setPrefWidth(100);
-        addTimeLeft.setPrefWidth(120);
-        addDescription.setPrefWidth(150);
+        addDescription.setPrefWidth(200);
 
         Button addButton = new Button("Add");
         addButton.setOnAction(e -> {
+            if (!TableChronology.isNumeric(addAllTime.getText())){
+                Warning wrongValueCompleted = new Warning("Wrong value of all time");
+                wrongValueCompleted.show();
+                return;
+            }
+
+            double addAllTimeDouble = Double.parseDouble(addAllTime.getText());
+            if (addAllTimeDouble < 0) {
+                Warning wrongValueCompleted = new Warning("Wrong value of all time");
+                wrongValueCompleted.show();
+                return;
+            }
+
+            if (!TableChronology.isNumeric(addCompleted.getText())){
+                Warning wrongValueCompleted = new Warning("Wrong value of completed");
+                wrongValueCompleted.show();
+                return;
+            }
+
+            double addCompletedDouble = Double.parseDouble(addCompleted.getText());
+            if (addCompletedDouble < 0 || addCompletedDouble > 100) {
+                Warning wrongValueCompleted = new Warning("Wrong value of completed");
+                wrongValueCompleted.show();
+                return;
+            }
+
             tableChronology.getData().add(new Task(
                     addDayComboBox.getValue().toString(),
                     addTask.getText(),
                     addAllTime.getText(),
                     addCompleted.getText(),
-                    addTimeLeft.getText(),
                     addDescription.getText()));
             addDayComboBox.setValue(WeekDays.MONDAY);
             addTask.setText("Enter task");
             addAllTime.setText("Enter all time");
             addCompleted.setText("Completed");
-            addTimeLeft.setText("Time left");
             addDescription.setText("Add specific descriptions");
+            tableChronology.refreshData();
         });
 
         Button removeButton = new Button("Remove");
@@ -60,7 +82,7 @@ public class AddTaskPanel {
         });
 
         userEntryHBox.getChildren().addAll(addDayComboBox, addTask, addAllTime, addCompleted,
-                addTimeLeft, addDescription, addButton, removeButton);
+                addDescription, addButton, removeButton);
     }
 
     public HBox getUserEntryHBox() {

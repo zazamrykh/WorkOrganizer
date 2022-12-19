@@ -18,8 +18,8 @@ public class OrganizeTaskPanel {
             resolutionChanger *= (-1);
             stage.setWidth(stage.getWidth() + resolutionChanger);
             TransferTasks.transfer(tableChronologyAddTasksScene, tableChronologyMainScene);
-//            tableChronologyMainScene.getData().setAll(tableChronologyAddTasksScene.getData());
-            tableChronologyAddTasksScene.refreshData();
+            tableChronologyMainScene.refreshData();
+            tableChronologyAddTasksScene.removeData();
         });
 
         Button addButton = new Button("Add task");

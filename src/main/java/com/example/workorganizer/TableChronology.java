@@ -7,7 +7,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,16 +43,59 @@ public class TableChronology {
         column.setCellFactory(TextFieldTableCell.forTableColumn());
         switch (columnName) {
             case "Day" -> column.setOnEditCommit(
-                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setDay(t.getNewValue())
+                    t -> {
+                        String newValueString = t.getNewValue();
+                        if (isWeekDay(newValueString)) {
+                            t.getTableView().getItems().get(t.getTablePosition().getRow()).setDay(newValueString);
+                        } else {
+                            Warning warning = new Warning("Wrong value of day");
+                            warning.show();
+                        }
+                        tableView.refresh();
+                    }
             );
             case "Task" -> column.setOnEditCommit(
                     t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setTask(t.getNewValue())
             );
             case "AllTime" -> column.setOnEditCommit(
-                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setAllTime(t.getNewValue())
+                t -> {
+                    String newValueString = t.getNewValue();
+                    if (isNumeric(newValueString)) {
+                        double newValue = Double.parseDouble(t.getNewValue());
+                        if (newValue < 0) {
+                            Warning warning = new Warning("Wrong value of all time");
+                            warning.show();
+                            tableView.refresh();
+                        } else {
+                            t.getTableView().getItems().get(t.getTablePosition().getRow()).setAllTime(newValueString);
+                            refreshData();
+                        }
+                    } else {
+                        Warning warning = new Warning("Wrong value of day");
+                        warning.show();
+                        tableView.refresh();
+                    }
+                }
             );
             case "Completed" -> column.setOnEditCommit(
-                    t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setCompleted(t.getNewValue())
+                t -> {
+                    String newValueString = t.getNewValue();
+                    if (isNumeric(newValueString)) {
+                        double newValue = Double.parseDouble(t.getNewValue());
+                        if (newValue < 0 || newValue > 100) {
+                            Warning warning = new Warning("Wrong value of completed");
+                            warning.show();
+                            tableView.refresh();
+                        } else {
+                            t.getTableView().getItems().get(t.getTablePosition().getRow()).setCompleted(newValueString);
+                            refreshData();
+                        }
+                    } else {
+                        Warning warning = new Warning("Wrong value of day");
+                        warning.show();
+                        tableView.refresh();
+                    }
+                }
             );
             case "TimeLeft" -> column.setOnEditCommit(
                     t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setTimeLeft(t.getNewValue())
@@ -62,6 +104,15 @@ public class TableChronology {
                     t -> t.getTableView().getItems().get(t.getTablePosition().getRow()).setDescription(t.getNewValue())
             );
         }
+    }
+
+    private boolean isWeekDay(String newValueString) {
+        for (WeekDays weekDay: WeekDays.getValues()) {
+            if (newValueString.equals(weekDay.toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private List<TableColumn<Task, String>> createAndGetColumns() {
@@ -90,10 +141,7 @@ public class TableChronology {
 
         dayCol.setComparator(dayComparator);
         if (isMainSceneTableChronology){
-            dayCol.setEditable(false);
-            allTimeCol.setEditable(false);
             timeLeftCol.setEditable(false);
-
             return new ArrayList<>(Arrays.asList(dayCol, taskCol, allTimeCol,
                     completedCol, timeLeftCol, descriptionCol));
         }
@@ -102,13 +150,9 @@ public class TableChronology {
                 completedCol, descriptionCol));
     }
 
-    public void refreshData() {
+    public void removeData() {
         data = FXCollections.observableArrayList();
         tableView.setItems(data);
-    }
-
-    public void setData(ObservableList<Task> data) {
-        this.data = data;
     }
 
     private int getDayNumber(String day) {
@@ -124,5 +168,24 @@ public class TableChronology {
             default -> dayNumber = -1;
         }
         return dayNumber;
+    }
+
+    public void refreshData() {
+        for (Task task :data) {
+            double completed = Double.parseDouble(task.getCompleted());
+            double allTime = Double.parseDouble(task.getAllTime());
+            double timeLeft = allTime * (1 - completed / 100);
+            task.setTimeLeft(String.valueOf(timeLeft));
+        }
+        tableView.refresh();
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 }
