@@ -33,8 +33,8 @@ public class TopPanel {
         }
         menuBar.getMenus().add(fileMenu);
 
-        Menu Task = new Menu("_" + "Task");
-        MenuItem addTask = new MenuItem("Add");
+        Menu Task = new Menu("_" + "Organizer");
+        MenuItem addTask = new MenuItem("Make week plan");
         Task.getItems().add(addTask);
         menuBar.getMenus().add(Task);
         addTask.setOnAction(ae -> {

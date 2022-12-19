@@ -27,10 +27,6 @@ public class Warning {
         dialogStage.setScene(new Scene(vbox));
     }
 
-    public Stage getStage() {
-        return dialogStage;
-    }
-
     public void show() {
         dialogStage.show();
     }
