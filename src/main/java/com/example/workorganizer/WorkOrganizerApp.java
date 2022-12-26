@@ -19,7 +19,7 @@ public class WorkOrganizerApp extends Application {
         VBox allItemsMainScene = new VBox();
         VBox allItemsAddTasksScene = new VBox();
         Scene mainScene = new Scene(allItemsMainScene);
-        Scene addTasksScene = new Scene(allItemsAddTasksScene);
+        Scene organizeScene = new Scene(allItemsAddTasksScene);
 
         allItemsMainScene.setSpacing(7);
         allItemsAddTasksScene.setSpacing(7);
@@ -29,20 +29,23 @@ public class WorkOrganizerApp extends Application {
         final LabelView labelAddTaskScene = new LabelView("Work Organizer", new Font("Arial", 18),
                 new Insets(10, 10, 10, 10), true);
 
-        TopPanel topPanelMainScene = new TopPanel("File", primaryStage, addTasksScene, labelMainScene,
-                new MenuItem[] {new MenuItem("Open..."),
-                        new MenuItem("Save As..."),
-                        new MenuItem("Print..."),
-                        new MenuItem("Exit")});
-
-        TopPanel topPanelAddTaskScene = new TopPanel("File", primaryStage, addTasksScene, labelAddTaskScene,
-                new MenuItem[] {new MenuItem("Open..."),
-                        new MenuItem("Save As..."),
-                        new MenuItem("Print..."),
-                        new MenuItem("Exit")});
-
         TableChronology tableChronologyMainScene = new TableChronology(true);
         TableChronology tableChronologyAddTasksScene = new TableChronology(false);
+
+
+        TopPanel topPanelMainScene = new TopPanel("File", primaryStage, tableChronologyMainScene,
+                organizeScene, labelMainScene,
+                new MenuItem[] {new MenuItem("Open..."),
+                        new MenuItem("Save As..."),
+                        new MenuItem("Print..."),
+                        new MenuItem("Exit")});
+
+        TopPanel topPanelAddTaskScene = new TopPanel("File", primaryStage, tableChronologyMainScene,
+                organizeScene, labelAddTaskScene,
+                new MenuItem[] {new MenuItem("Open..."),
+                        new MenuItem("Save As..."),
+                        new MenuItem("Print..."),
+                        new MenuItem("Exit")});
 
         AddTaskPanel addTaskPanel = new AddTaskPanel(tableChronologyMainScene);
 

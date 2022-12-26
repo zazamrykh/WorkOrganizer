@@ -1,15 +1,16 @@
 package com.example.workorganizer;
 
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -23,9 +24,12 @@ public class TopPanel {
     private final MenuBar menuBar = new MenuBar();
     private final FileChooser fileChooser = new FileChooser();
     private final Desktop desktop = Desktop.getDesktop();
+    private final ObservableList<Task> tasks;
     private int resolutionChanger = 1;
 
-    public TopPanel(String menuLabel, Stage stage, Scene addTasksScene,LabelView labelView, MenuItem[] menuItems) {
+    public TopPanel(String menuLabel, Stage stage, TableChronology tableChronology, Scene addTasksScene,LabelView labelView,
+                    MenuItem[] menuItems) {
+        this.tasks = tableChronology.getData();
         Label response = new Label("Menu");
         Menu fileMenu = new Menu("_" + menuLabel);
         for (MenuItem menuItem : menuItems) {
@@ -67,6 +71,7 @@ public class TopPanel {
                 case "Open..." -> menuItem.setOnAction(
                         e -> {
                             File opensFile = fileChooser.showOpenDialog(stage);
+                            tasks.clear();
                             if (opensFile != null) {
                                 openFile(opensFile);
                             }
@@ -75,15 +80,6 @@ public class TopPanel {
                     File savesFile = fileChooser.showSaveDialog(stage);
                     if (savesFile != null) {
                         saveFile(savesFile);
-                    }
-                });
-                case "Print..." -> menuItem.setOnAction(ae -> {
-                    PrinterJob job = PrinterJob.createPrinterJob();
-                    if (job != null) {
-                        boolean showPrintDialog = job.showPrintDialog(stage.getOwner());
-                        if (showPrintDialog) {
-                            job.endJob();
-                        }
                     }
                 });
             }
@@ -95,24 +91,40 @@ public class TopPanel {
     }
 
     private void openFile(File opensFile) {
+
         try {
-            desktop.open(opensFile);
-        } catch (IOException ex) {
-            Logger.getLogger(
-                    WorkOrganizerApp.class.getName()).log(
-                    Level.SEVERE, null, ex
-            );
+            FileReader fileReader = new FileReader(opensFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                if (!line.equals("")){
+                    addTask(line);
+                }
+                line = bufferedReader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    private void addTask(String taskString) {
+        String[] values = taskString.split("\t");
+        Task readTask = new Task(values[0], values[1], values[2], values[3], values[4], values[5]);
+        tasks.add(readTask);
+    }
+
     private void saveFile(File savesFile) {
-        try {
-            desktop.open(savesFile);
+        try (FileWriter writer = new FileWriter(savesFile, false)) {
+            for (Task task : tasks) {
+                writer.write(task.getDay() + " " + "\t"
+                        + task.getTask() + " " + "\t"
+                        + task.getAllTime() + " " +
+                        "\t" + task.getCompleted() + " "
+                        + "\t" + task.getTimeLeft() + " "
+                        + "\t" + task.getDescription() + " " + "\n");
+            }
         } catch (IOException ex) {
-            Logger.getLogger(
-                    WorkOrganizerApp.class.getName()).log(
-                    Level.SEVERE, null, ex
-            );
+            ex.printStackTrace();
         }
     }
 }
